@@ -1,0 +1,51 @@
+name: Feature request
+description: 建议新的筛选能力或使用体验
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢建议。请尽量描述真实使用场景，而不只是功能名称，这样更容易判断优先级和实现方式。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你想解决的问题
+      description: 当前的使用场景是什么？哪里不方便？
+      placeholder: |
+        当表格列很多时，我需要同时筛选多个列，但每次都重新勾选很麻烦。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 希望增加的能力
+      description: 描述你期望的交互或行为。
+      placeholder: 希望可以保存常用筛选组合，并在其他表格中复用。
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 你考虑过的替代方案
+      description: 可选。比如现有功能组合、其他工具的做法。
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 其他补充
+      description: 截图、示例表格、OpenCode 版本或其他上下文。
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已经搜索过现有 Issue，确认没有重复建议。
+          required: true
+        - label: 这个建议与 OpenCode Desktop 会话中的表格筛选有关。
+          required: true

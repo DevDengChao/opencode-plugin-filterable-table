@@ -3,6 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "description": "Filterable Markdown tables for OpenCode Desktop sessions",
+  "license": "MIT",
+  "author": "DevDengChao",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevDengChao/opencode-plugin-filterable-table.git"
+  },
+  "homepage": "https://github.com/DevDengChao/opencode-plugin-filterable-table#readme",
+  "bugs": {
+    "url": "https://github.com/DevDengChao/opencode-plugin-filterable-table/issues"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "opencode-desktop",
+    "markdown",
+    "table",
+    "filter",
+    "typescript",
+    "gui-plugin"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
@@ -11,7 +31,10 @@
   "files": [
     "src",
     "dist",
-    "README.md"
+    "docs",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "vite build",

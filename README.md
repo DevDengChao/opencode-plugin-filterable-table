@@ -1,55 +1,98 @@
 # OpenCode Filterable Table
 
-为 OpenCode Desktop 会话中的 Markdown 表格增加按列筛选能力。
+让 OpenCode Desktop 会话中的 Markdown 表格支持按列筛选。
 
-插件会在每个表头右侧加一个漏斗按钮。点击后可以：
+<p align="center">
+  <img src="./docs/preview.jpg" alt="在 OpenCode 会话中筛选 Markdown 表格" width="900">
+</p>
 
-- 勾选该列要显示的值，支持多选
-- 值较多时搜索过滤
-- 全选、全不选、重置当前列
-- 多列条件同时生效（列与列之间是 AND，同列多值是 OR）
-- 在表格下方看到「显示 X / Y 行」，并可一键清除当前表格的全部筛选
+<p align="center">
+  <sub>在「任务数」列取消勾选 1 后，表格只保留 3 行；底部会显示当前行数，并提供「清除全部筛选」。</sub>
+</p>
 
-筛选只影响当前会话中的显示，不会修改原始 Markdown 或数据库内容。
+<p align="center">
+  <a href="https://github.com/DevDengChao/opencode-plugin-filterable-table/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/DevDengChao/opencode-plugin-filterable-table/actions/workflows/ci.yml/badge.svg">
+  </a>
+  <img alt="OpenCode Desktop" src="https://img.shields.io/badge/OpenCode%20Desktop-2.2.x-111">
+  <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue">
+</p>
 
-## 环境要求
+<p align="center">
+  <a href="./README.md"><strong>简体中文</strong></a> · <a href="./README.en.md">English</a>
+</p>
 
-- OpenCode Desktop **2.2.x**（本项目按 2.2.1 开发和验证）
-- 表格位于会话时间线中，并且由 OpenCode 的 Markdown 渲染器生成
-- GUI 插件目前是 experimental API，OpenCode 升级后可能需要适配
+OpenCode 会话里经常出现 Markdown 表格。这个插件会在每个表头右侧加一个漏斗按钮，点开后可以勾选要保留的值，只显示匹配的行。
 
-> TUI 不支持表头内嵌下拉。TUI 插件只能按代码块语言注册自定义渲染器，无法自动增强普通 Markdown 表格。
+筛选只发生在当前会话的显示层，不会修改原始 Markdown，也不会改动会话数据。
 
-## 安装
+## 功能
 
-1. 安装依赖并构建：
+- **表头即入口**：不用打开额外面板，直接在列标题上筛选
+- **多选**：同一列可以同时保留多个值
+- **搜索**：候选值较多时可以按文本搜索
+- **全选 / 全不选 / 重置**：快速调整当前列
+- **多列组合**：列与列之间按 AND 组合，同一列内多个值按 OR 组合
+- **行数状态**：表格下方显示「显示 X / Y 行」，并可一键清除当前表格的全部筛选
+- **空值处理**：空单元格显示为「（空）」，可以像普通值一样勾选或排除
+- **主题与语言**：跟随 OpenCode 的亮色/暗色主题和中文/英文界面
+- **状态保留**：消息重新渲染或虚拟滚动导致卸载再挂载后，筛选条件会尽量恢复
+- **命令面板**：可以运行「清除所有表格筛选」
+
+## 快速开始
+
+### 环境要求
+
+- OpenCode Desktop **2.2.x**（本项目在 2.2.1 上开发和验证）
+- Node.js **20.19+** 和 npm（仅用于构建插件）
+- Windows、macOS 或 Linux 上的 OpenCode Desktop
+
+### 构建
 
 ```bash
-npm install
+git clone git@github.com:DevDengChao/opencode-plugin-filterable-table.git
+cd opencode-plugin-filterable-table
+npm ci
 npm run build
 ```
 
-产物为 `dist/gui.cjs`。
+构建产物为 `dist/gui.cjs`。目前这是一个本地插件，尚未发布到 npm。
 
-2. 在全局配置文件 `~/.config/opencode/opencode.jsonc` 中加入插件。Windows 上通常是
-   `C:\Users\<用户名>\.config\opencode\opencode.jsonc`：
+### 配置
+
+在全局配置文件 `~/.config/opencode/opencode.jsonc` 中加入插件。Windows 上通常是
+`C:\Users\<用户名>\.config\opencode\opencode.jsonc`：
 
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
-    "file:///E:/path/to/opencode-plugin-filterable-table"
+    "file:///absolute/path/to/opencode-plugin-filterable-table"
   ]
 }
 ```
 
-也可以使用对象形式传入调试选项：
+Windows 路径示例：
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "file:///E:/my/open-source/opencode-plugin-filterable-table"
+  ]
+}
+```
+
+保存后 OpenCode 会热重载插件。如果 GUI 没有重新加载，可以重启 Desktop，或在
+**Settings > Extensions > Plugins** 中确认 `opencode-plugin-filterable-table` 已启用。
+
+开发时可以加上调试选项，把扫描到的表格数量输出到 Desktop 的 renderer 日志：
 
 ```jsonc
 {
   "plugins": [
     {
-      "package": "file:///E:/path/to/opencode-plugin-filterable-table",
+      "package": "file:///E:/my/open-source/opencode-plugin-filterable-table",
       "options": {
         "debug": true
       }
@@ -58,43 +101,57 @@ npm run build
 }
 ```
 
-`debug: true` 会把扫描到的表格数量输出到 Desktop 的 renderer 日志，排查问题时使用；平时可以省略。
-
-3. 保存配置。OpenCode 会热重载插件；如果 GUI 没有重新加载，可以重启 Desktop，或在
-   **Settings > Extensions > Plugins** 中检查 `opencode-plugin-filterable-table` 是否处于启用状态。
-
 ## 使用
 
 1. 打开一个包含 Markdown 表格的会话。
-2. 把鼠标移到表头。表头右侧会出现漏斗图标。
+2. 把鼠标移到表头，右侧会出现漏斗图标。
 3. 点击漏斗，勾选要保留的值。表格会立即只显示符合条件的行。
-4. 多个列可以叠加筛选。再次打开下拉可以搜索、全选、全不选或重置该列。
-5. 表格下方出现「显示 X / Y 行」时，点击「清除全部筛选」可以恢复整张表。
-6. 命令面板中也可以运行「清除所有表格筛选」。
+4. 其他列可以继续叠加筛选。
+5. 值较多时，下拉顶部会出现搜索框。
+6. 表格下方出现「显示 X / Y 行」时，点击「清除全部筛选」可以恢复整张表。
+7. 也可以在命令面板中运行「清除所有表格筛选」。
 
-空值会显示为「（空）」，可以像普通值一样勾选或排除。长文本会在下拉中截断显示，完整值放在悬停提示里。
+空值会显示为「（空）」。长文本会在下拉中截断显示，完整值放在悬停提示里。
 
-## 状态保留
+## 兼容性
 
-筛选状态按会话消息 part 保存：
+- 当前验证版本：**OpenCode Desktop 2.2.1**
+- 依赖 OpenCode Desktop 的 GUI 插件 API；该 API 目前仍是 **experimental**
+- 只处理会话时间线中的 Markdown 表格
+- **不支持 TUI**。TUI 插件只能按代码块语言注册自定义渲染器，无法自动增强普通 Markdown 表格
 
-- 消息重新渲染后，筛选条件会尽量恢复
-- 时间线虚拟滚动导致消息卸载再挂载时，筛选条件也会尽量恢复
-- 同一会话中的多张表格互相独立
-- 插件重载或 Desktop 重启后状态清空
+> 如果 OpenCode 修改了 Markdown 表格的 DOM 结构，这个插件可能需要适配。相关选择器集中在
+> `src/table-filter.ts`，便于后续维护。
+
+## 工作原理
+
+OpenCode Desktop 会把 Markdown 表格渲染成类似下面的结构：
+
+```html
+<div data-component="markdown-table">
+  <table>...</table>
+</div>
+```
+
+插件监听会话时间线容器 `[data-slot="session-timeline-scroll"]`，用 `MutationObserver` 发现表格，
+在 `<th>` 中注入筛选按钮，并通过挂在 `document.body` 上的 `position: fixed` 浮层显示下拉，
+避免被表格外层的 `overflow-x: auto` 裁剪。
+
+筛选状态按会话消息 part 保存，因此表格重新渲染或时间线虚拟滚动时，条件会尽量恢复。插件只修改
+DOM 的显示状态，不写入会话内容。
 
 ## 开发
 
 ```bash
 npm run demo       # 浏览器独立演示页，默认 http://localhost:5173
-npm run typecheck
-npm run test       # 运行 jsdom 单元测试
-npm run build
-npm run dev        # 监听构建 dist/gui.cjs
+npm run typecheck  # TypeScript 类型检查
+npm run test       # jsdom 单元测试
+npm run build      # 构建 dist/gui.cjs
+npm run dev        # 监听构建，Desktop 会自动重载 GUI 部分
 ```
 
-本地调试时把 `plugins` 指向本项目目录，修改代码后运行 `npm run dev` 或 `npm run build`，
-Desktop 会监听 `dist/gui.cjs` 并重新加载 GUI 部分。
+本地调试时，把全局配置中的 `plugins` 指向本项目目录。修改源码后运行 `npm run dev` 或
+`npm run build`，Desktop 会监听 `dist/gui.cjs` 并重新加载 GUI 部分。
 
 ### 文件结构
 
@@ -107,28 +164,52 @@ src/
 ├─ labels.ts         # 中文/英文文案
 └─ styles.css        # 使用 OpenCode 主题变量的样式
 demo/                # 浏览器演示页
+tests/               # jsdom 单元测试
 ```
 
-## 实现说明
+## 常见问题
 
-OpenCode Desktop 的 Markdown 表格会渲染成：
+### 表头没有出现漏斗图标
 
-```html
-<div data-component="markdown-table">
-  <table>...</table>
-</div>
-```
+请依次检查：
 
-插件监听会话时间线容器 `[data-slot="session-timeline-scroll"]`，用 `MutationObserver` 发现表格，
-在 `<th>` 中注入筛选按钮，并通过 `document.body` 上的 `position: fixed` 浮层显示下拉，
-避免被表格外层的 `overflow-x: auto` 裁剪。
+1. OpenCode Desktop 是否为 2.2.x。
+2. **Settings > Extensions > Plugins** 中插件是否已启用。
+3. 表格是否位于会话时间线中，而不是设置页、侧边栏或普通网页。
+4. 是否已经执行过 `npm run build`，并且 `dist/gui.cjs` 存在。
+5. 打开调试选项后查看 Desktop renderer 日志中是否有 `[filterable-table]` 输出。
 
-这套实现依赖 OpenCode 当前的 DOM 结构，不是公开的表格渲染器 API。如果 OpenCode 修改了表格的
-`data-component` 或时间线容器属性，需要同步调整 `src/table-filter.ts` 中的选择器。
+### 修改代码后没有生效
+
+运行 `npm run build`，或保持 `npm run dev` 运行。Desktop 监听的是 `dist/gui.cjs`，不是 `src/`
+下的源文件。
+
+### 筛选会修改原始 Markdown 吗？
+
+不会。插件只改变当前页面上的可见行，不改 Markdown、不改数据库，也不影响其他客户端。
+
+### 支持 TUI 吗？
+
+不支持。TUI 的表头内嵌下拉目前没有对应的插件扩展点。
 
 ## 已知限制
 
 - 只增强会话时间线中的表格，不增强设置页、侧边栏等位置的普通表格。
 - 筛选是显示层效果；被隐藏的行不会出现在选区复制结果中。
 - 单元格按可见文本匹配。一个单元格包含多个值时，会作为整体值处理。
-- 不支持 TUI。
+- 筛选状态保存在内存中，插件重载或 Desktop 重启后会清空。
+- 依赖 OpenCode Desktop 当前的 DOM 结构，升级后可能需要适配。
+
+## 参与贡献
+
+欢迎提交 Issue 和 Pull Request。开发、测试和提交规范见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+- [问题反馈](https://github.com/DevDengChao/opencode-plugin-filterable-table/issues)
+- [更新日志](./CHANGELOG.md)
+- [English README](./README.en.md)
+
+## License
+
+[MIT](./LICENSE) © 2026 DevDengChao
+
+如果这个插件对你有帮助，欢迎给仓库点一个 Star。
