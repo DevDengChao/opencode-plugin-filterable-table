@@ -24,7 +24,7 @@
 
 ```jsonc
 "plugins": [
-  "@devdengchao/opencode-plugin-filterable-table@0.1.0"
+  "@devdengchao/opencode-plugin-filterable-table@0.1.1"
 ]
 ```
 

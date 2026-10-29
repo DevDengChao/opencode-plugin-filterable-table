@@ -7,6 +7,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-29
+
 ### Added
 
 - Published package as `@devdengchao/opencode-plugin-filterable-table`
@@ -41,5 +43,6 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - The Desktop GUI plugin API is experimental and may change.
 - The implementation relies on OpenCode's Markdown table DOM structure.
 
-[Unreleased]: https://github.com/DevDengChao/opencode-plugin-filterable-table/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/DevDengChao/opencode-plugin-filterable-table/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/DevDengChao/opencode-plugin-filterable-table/releases/tag/v0.1.1
 [0.1.0]: https://github.com/DevDengChao/opencode-plugin-filterable-table/releases/tag/v0.1.0
