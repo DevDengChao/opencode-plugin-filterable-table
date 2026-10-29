@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+### Changed
+
+- Updated Vitest to 4.1.12 and pinned the transitive glob 10.x dependency to 10.5.0 to address development dependency security alerts
+- Normalized `package-lock.json` resolved URLs to `https://registry.npmjs.org` for public CI and contributors
+
 ## [0.1.0] - 2026-10-29
 
 ### Added
