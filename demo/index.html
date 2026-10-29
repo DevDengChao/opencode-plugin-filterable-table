@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filterable table demo</title>
+  </head>
+  <body>
+    <main class="demo-page">
+      <header class="demo-header">
+        <div>
+          <h1>表格筛选插件 Demo</h1>
+          <p>模拟 OpenCode Desktop 会话中的 Markdown 表格。</p>
+        </div>
+        <div class="demo-actions">
+          <button id="theme" type="button">切换主题</button>
+          <button id="reset" type="button">清除全部筛选</button>
+        </div>
+      </header>
+
+      <section data-slot="session-timeline-scroll" class="demo-timeline">
+        <article data-timeline-part-id="demo:part:1" data-markdown-key="demo:block:1" class="demo-message">
+          <h2>任务清单对照</h2>
+          <p>测试环境的 5 个任务与正式环境的 9 个任务，按 <code>symbol</code>、<code>timeframe</code>、<code>server</code> 三键求交集为空。</p>
+
+          <div data-component="markdown">
+            <div data-component="markdown-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>环境</th>
+                    <th>task</th>
+                    <th>标的</th>
+                    <th>周期</th>
+                    <th>服务器</th>
+                    <th>启用</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>测试</td><td>1</td><td>XAUUSD.c</td><td>M15</td><td>GTCGlobalSA - Server 3</td><td>停用</td></tr>
+                  <tr><td>测试</td><td>2</td><td>XAUUSD</td><td>M5</td><td>MetaQuotes-Demo</td><td>启用</td></tr>
+                  <tr><td>测试</td><td>3</td><td>XAUUSD</td><td>M15</td><td>MetaQuotes-Demo</td><td>启用</td></tr>
+                  <tr><td>测试</td><td>6</td><td>XAUUSD</td><td>M5</td><td>GTCGlobalTrade-Demo</td><td>启用</td></tr>
+                  <tr><td>测试</td><td>7</td><td>XAUUSD</td><td>M15</td><td>GTCGlobalTrade-Demo</td><td>启用</td></tr>
+                  <tr><td>正式</td><td>1</td><td>XAUUSD</td><td>H1</td><td>(空, 平台默认)</td><td>停用</td></tr>
+                  <tr><td>正式</td><td>2</td><td>XAUUSD.c</td><td>D1</td><td>GTCGlobalSA - Server 3</td><td>停用</td></tr>
+                  <tr><td>正式</td><td>3</td><td>XAUUSD.c</td><td>H1</td><td>GTCGlobalSA - Server 3</td><td>停用</td></tr>
+                  <tr><td>正式</td><td>4</td><td>XAUUSD.c</td><td>M30</td><td>GTCGlobalSA - Server 3</td><td>停用</td></tr>
+                  <tr><td>正式</td><td>5</td><td>XAUUSD</td><td>H1</td><td>GTCGlobalSA - Server 2</td><td>启用</td></tr>
+                  <tr><td>正式</td><td>6</td><td>XAUUSD</td><td>D1</td><td>GTCGlobalSA - Server 2</td><td>启用</td></tr>
+                  <tr><td>正式</td><td>7</td><td>XAUUSD</td><td>M30</td><td>GTCGlobalSA - Server 2</td><td>启用</td></tr>
+                  <tr><td>正式</td><td>8</td><td>XAUUSD</td><td>M15</td><td>GTCGlobalSA - Server 2</td><td>启用</td></tr>
+                  <tr><td>正式</td><td>9</td><td>XAUUSD</td><td>M5</td><td>GTCGlobalSA - Server 2</td><td>启用</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3>同一消息中的第二张表</h3>
+          <div data-component="markdown">
+            <div data-component="markdown-table">
+              <table>
+                <thead>
+                  <tr><th>状态</th><th>数量</th><th>说明</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>启用</td><td>8</td><td>正常跟单</td></tr>
+                  <tr><td>停用</td><td>6</td><td>暂停或观察中</td></tr>
+                  <tr><td>待确认</td><td>2</td><td>等待人工核对</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article data-timeline-part-id="demo:part:2" data-markdown-key="demo:block:2" class="demo-message">
+          <h2>大量候选值与空值</h2>
+          <div data-component="markdown">
+            <div data-component="markdown-table">
+              <table id="many-values">
+                <thead>
+                  <tr><th>序号</th><th>长文本值</th><th>备注</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="demo-actions">
+            <button id="add-row" type="button">追加一行</button>
+            <button id="remove-row" type="button">删除最后一行</button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./demo.ts"></script>
+  </body>
+</html>

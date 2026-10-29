@@ -1,0 +1,35 @@
+{
+  "name": "opencode-plugin-filterable-table",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Filterable Markdown tables for OpenCode Desktop sessions",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./gui-experimental": "./dist/gui.cjs"
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "demo": "vite --config vite.demo.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@opencode/plugin": "2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "jsdom": "^27.4.0",
+    "solid-js": "^1.9.17",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.7",
+    "vite-plugin-solid": "^2.11.14",
+    "vitest": "^3.2.7"
+  }
+}
