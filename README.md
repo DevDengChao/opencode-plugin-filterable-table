@@ -75,7 +75,7 @@ OpenCode 会话里经常出现 Markdown 表格。这个插件会在每个表头�
 
 ```jsonc
 "plugins": [
-  "@devdengchao/opencode-plugin-filterable-table@0.1.0"
+  "@devdengchao/opencode-plugin-filterable-table@0.1.1"
 ]
 ```
 
