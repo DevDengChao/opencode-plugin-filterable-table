@@ -46,6 +46,9 @@
   "dependencies": {
     "@opencode/plugin": "2.2.1"
   },
+  "overrides": {
+    "glob@^10.0.0": "^10.5.0"
+  },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "jsdom": "^27.4.0",
@@ -53,6 +56,6 @@
     "typescript": "^5.9.3",
     "vite": "^7.3.7",
     "vite-plugin-solid": "^2.11.14",
-    "vitest": "^3.2.7"
+    "vitest": "^4.1.12"
   }
 }
