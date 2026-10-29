@@ -3,7 +3,7 @@
 Filter Markdown tables in OpenCode Desktop sessions by column values.
 
 <p align="center">
-  <img src="./docs/preview.jpg" alt="Filtering a Markdown table in an OpenCode session" width="900">
+  <img src="https://raw.githubusercontent.com/DevDengChao/opencode-plugin-filterable-table/main/docs/preview.jpg" alt="Filtering a Markdown table in an OpenCode session" width="900">
 </p>
 
 <p align="center">
@@ -11,6 +11,9 @@ Filter Markdown tables in OpenCode Desktop sessions by column values.
 </p>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/@devdengchao/opencode-plugin-filterable-table">
+    <img alt="npm" src="https://img.shields.io/npm/v/@devdengchao/opencode-plugin-filterable-table">
+  </a>
   <a href="https://github.com/DevDengChao/opencode-plugin-filterable-table/actions/workflows/ci.yml">
     <img alt="CI" src="https://github.com/DevDengChao/opencode-plugin-filterable-table/actions/workflows/ci.yml/badge.svg">
   </a>
@@ -44,10 +47,44 @@ Filtering is display-only. It does not change the original Markdown or the store
 ### Requirements
 
 - OpenCode Desktop **2.2.x** (developed and tested with 2.2.1)
-- Node.js **20.19+** and npm (for building the plugin)
+- No extra Node.js install is required when installing from npm
+- Node.js **20.19+** and npm are required only when building from source
 - OpenCode Desktop on Windows, macOS, or Linux
 
-### Build
+### Install from npm (recommended)
+
+Package name:
+
+```text
+@devdengchao/opencode-plugin-filterable-table
+```
+
+Add the plugin to your global `~/.config/opencode/opencode.jsonc`. On Windows this is usually
+`C:\Users\<name>\.config\opencode\opencode.jsonc`:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "@devdengchao/opencode-plugin-filterable-table"
+  ]
+}
+```
+
+Pin a version when needed:
+
+```jsonc
+"plugins": [
+  "@devdengchao/opencode-plugin-filterable-table@0.1.0"
+]
+```
+
+OpenCode installs and loads the package from npm. No clone or manual build is required.
+
+If the GUI does not reload after saving, restart Desktop or check **Settings > Extensions > Plugins**
+for `opencode-plugin-filterable-table`.
+
+### Build from source (development)
 
 ```bash
 git clone git@github.com:DevDengChao/opencode-plugin-filterable-table.git
@@ -56,12 +93,7 @@ npm ci
 npm run build
 ```
 
-The build output is `dist/gui.cjs`. This is currently a local plugin and is not published to npm.
-
-### Configure
-
-Add the plugin to your global `~/.config/opencode/opencode.jsonc`. On Windows this is usually
-`C:\Users\<name>\.config\opencode\opencode.jsonc`:
+The build output is `dist/gui.cjs`. Point the global config at the local directory:
 
 ```jsonc
 {
@@ -72,19 +104,7 @@ Add the plugin to your global `~/.config/opencode/opencode.jsonc`. On Windows th
 }
 ```
 
-Windows example:
-
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugins": [
-    "file:///E:/my/open-source/opencode-plugin-filterable-table"
-  ]
-}
-```
-
-OpenCode reloads plugins when the config changes. If the GUI does not reload, restart Desktop or check
-**Settings > Extensions > Plugins** for `opencode-plugin-filterable-table`.
+On Windows, use a path such as `file:///E:/my/open-source/opencode-plugin-filterable-table`.
 
 For development, enable debug logging:
 
@@ -92,7 +112,7 @@ For development, enable debug logging:
 {
   "plugins": [
     {
-      "package": "file:///E:/my/open-source/opencode-plugin-filterable-table",
+      "package": "@devdengchao/opencode-plugin-filterable-table",
       "options": {
         "debug": true
       }
@@ -100,6 +120,8 @@ For development, enable debug logging:
   ]
 }
 ```
+
+When debugging a local checkout, replace `package` with the `file:///...` directory.
 
 ## Usage
 
@@ -176,7 +198,7 @@ Check the following:
 1. You are running OpenCode Desktop 2.2.x.
 2. The plugin is enabled under **Settings > Extensions > Plugins**.
 3. The table is in the session timeline, not in Settings, the sidebar, or a regular web page.
-4. `dist/gui.cjs` exists and `npm run build` has completed.
+4. For a local checkout, `dist/gui.cjs` exists and `npm run build` has completed; for an npm install, the package installed successfully.
 5. With `debug: true`, the Desktop renderer log contains `[filterable-table]` output.
 
 ### Changes do not show up
@@ -204,6 +226,7 @@ No. The TUI has no plugin extension point for interactive table headers.
 Issues and pull requests are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for development and review guidelines.
 
 - [Issues](https://github.com/DevDengChao/opencode-plugin-filterable-table/issues)
+- [npm package](https://www.npmjs.com/package/@devdengchao/opencode-plugin-filterable-table)
 - [Changelog](./CHANGELOG.md)
 - [中文 README](./README.md)
 

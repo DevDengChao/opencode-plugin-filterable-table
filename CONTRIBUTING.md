@@ -63,6 +63,58 @@ chore: update dependencies
 
 一个提交尽量只做一件事。不要把 `node_modules`、`dist` 或本地临时文件提交进仓库。
 
+## 发布
+
+npm 包名：
+
+```text
+@devdengchao/opencode-plugin-filterable-table
+```
+
+发布前先检查包内容：
+
+```bash
+npm pack --dry-run
+```
+
+发布流程使用 npm Trusted Publishing（OIDC）。但 npm 目前要求包已经存在，才能配置
+Trusted Publisher，所以 **首次发布需要手动完成一次**：
+
+```bash
+npm login --registry=https://registry.npmjs.org
+npm publish --access public --registry=https://registry.npmjs.org
+```
+
+发布成功后，在 npm 包设置中添加 Trusted Publisher：
+
+```text
+Organization or user: DevDengChao
+Repository:           opencode-plugin-filterable-table
+Workflow filename:    release.yml
+Allowed actions:      勾选 npm publish
+```
+
+也可以使用 `npm trust`（需要 npm 11.15.0+）：
+
+```bash
+npm trust github @devdengchao/opencode-plugin-filterable-table \
+  --repo DevDengChao/opencode-plugin-filterable-table \
+  --file release.yml \
+  --allow-publish \
+  --registry=https://registry.npmjs.org
+```
+
+Trusted Publisher 配置后必须在 2 天内完成一次成功的 OIDC 发布，否则配置会过期。因此首次
+手动发布后，建议立即提升一个补丁版本，让 `release.yml` 通过 OIDC 完成第一次自动发布：
+
+```bash
+npm version patch
+git push --follow-tags
+```
+
+后续版本只需更新版本号并推送 `v*` tag。`release.yml` 会在版本尚未发布时执行
+`npm publish`，已发布版本会自动跳过。
+
 ## Pull Request
 
 PR 描述请包含：

@@ -6,7 +6,27 @@
 
 ### 名称
 
-`opencode-plugin-filterable-table`
+- GitHub 仓库：`opencode-plugin-filterable-table`
+- npm 包：`@devdengchao/opencode-plugin-filterable-table`
+
+### npm 安装
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "@devdengchao/opencode-plugin-filterable-table"
+  ]
+}
+```
+
+固定版本：
+
+```jsonc
+"plugins": [
+  "@devdengchao/opencode-plugin-filterable-table@0.1.0"
+]
+```
 
 ### GitHub About
 
@@ -56,6 +76,8 @@ English：
 >
 > MIT 开源，欢迎试用：
 > https://github.com/DevDengChao/opencode-plugin-filterable-table
+>
+> npm 包名：`@devdengchao/opencode-plugin-filterable-table`
 
 ## 中文长文案
 
@@ -80,6 +102,8 @@ English：
 >
 > 项目地址：
 > https://github.com/DevDengChao/opencode-plugin-filterable-table
+>
+> npm 包名：`@devdengchao/opencode-plugin-filterable-table`
 
 ## English short copy
 
@@ -91,6 +115,8 @@ For X, Reddit, Discord, or a short update:
 >
 > MIT licensed:
 > https://github.com/DevDengChao/opencode-plugin-filterable-table
+>
+> npm: `@devdengchao/opencode-plugin-filterable-table`
 
 ## English long copy
 
@@ -116,6 +142,8 @@ For a blog post, release announcement, or longer post:
 >
 > Repository:
 > https://github.com/DevDengChao/opencode-plugin-filterable-table
+>
+> npm package: `@devdengchao/opencode-plugin-filterable-table`
 
 ## Release Notes
 
@@ -145,6 +173,8 @@ First public release of OpenCode Filterable Table.
 - Tested with OpenCode Desktop 2.2.1.
 - The Desktop GUI plugin API is experimental.
 - TUI is not supported.
+- npm package: `@devdengchao/opencode-plugin-filterable-table`
+- Future releases use npm Trusted Publishing with GitHub Actions OIDC.
 ```
 
 ## 发布前检查清单
@@ -152,10 +182,14 @@ First public release of OpenCode Filterable Table.
 - [ ] `npm run typecheck` 通过
 - [ ] `npm run test` 通过
 - [ ] `npm run build` 通过
+- [ ] `npm pack --dry-run` 内容正确，包含 `dist/gui.cjs` 和 `src/index.ts`
 - [ ] GitHub Actions CI 在 Ubuntu 和 Windows 上通过
 - [ ] README 中的 `docs/preview.jpg` 能正常显示
 - [ ] 仓库 About、Topics、社交预览图已设置
 - [ ] Issue 模板可以正常选择
 - [ ] 版本号和 `CHANGELOG.md` 一致
+- [ ] 首次发布已手动执行 `npm publish --access public`
+- [ ] npm Trusted Publisher 已指向 `release.yml` 并允许 `npm publish`
+- [ ] Trusted Publisher 配置后 2 天内完成一次成功的 OIDC 发布
 - [ ] 在 OpenCode Desktop 2.2.1 的真实会话中再次验证表头筛选
 - [ ] 如果发布 Release，附上截图和安装说明
