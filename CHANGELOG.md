@@ -7,6 +7,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+### Added
+
+- Published package as `@devdengchao/opencode-plugin-filterable-table`
+- Added the `release.yml` GitHub Actions workflow for npm Trusted Publishing with OIDC
+- Added npm installation instructions and npm badges to both READMEs
+
 ### Changed
 
 - Updated Vitest to 4.1.12 and pinned the transitive glob 10.x dependency to 10.5.0 to address development dependency security alerts

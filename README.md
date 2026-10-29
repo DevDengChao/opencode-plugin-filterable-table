@@ -3,7 +3,7 @@
 让 OpenCode Desktop 会话中的 Markdown 表格支持按列筛选。
 
 <p align="center">
-  <img src="./docs/preview.jpg" alt="在 OpenCode 会话中筛选 Markdown 表格" width="900">
+  <img src="https://raw.githubusercontent.com/DevDengChao/opencode-plugin-filterable-table/main/docs/preview.jpg" alt="在 OpenCode 会话中筛选 Markdown 表格" width="900">
 </p>
 
 <p align="center">
@@ -11,6 +11,9 @@
 </p>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/@devdengchao/opencode-plugin-filterable-table">
+    <img alt="npm" src="https://img.shields.io/npm/v/@devdengchao/opencode-plugin-filterable-table">
+  </a>
   <a href="https://github.com/DevDengChao/opencode-plugin-filterable-table/actions/workflows/ci.yml">
     <img alt="CI" src="https://github.com/DevDengChao/opencode-plugin-filterable-table/actions/workflows/ci.yml/badge.svg">
   </a>
@@ -44,10 +47,44 @@ OpenCode 会话里经常出现 Markdown 表格。这个插件会在每个表头�
 ### 环境要求
 
 - OpenCode Desktop **2.2.x**（本项目在 2.2.1 上开发和验证）
-- Node.js **20.19+** 和 npm（仅用于构建插件）
+- 使用 npm 安装时不需要额外安装 Node.js
+- 从源码构建时需要 Node.js **20.19+** 和 npm
 - Windows、macOS 或 Linux 上的 OpenCode Desktop
 
-### 构建
+### 从 npm 安装（推荐）
+
+包名：
+
+```text
+@devdengchao/opencode-plugin-filterable-table
+```
+
+在全局配置文件 `~/.config/opencode/opencode.jsonc` 中加入插件。Windows 上通常是
+`C:\Users\<用户名>\.config\opencode\opencode.jsonc`：
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "@devdengchao/opencode-plugin-filterable-table"
+  ]
+}
+```
+
+也可以固定版本：
+
+```jsonc
+"plugins": [
+  "@devdengchao/opencode-plugin-filterable-table@0.1.0"
+]
+```
+
+OpenCode 会从 npm 安装并加载这个包，不需要克隆仓库或手动构建。
+
+保存后如果 GUI 没有重新加载，可以重启 Desktop，或在 **Settings > Extensions > Plugins**
+中确认 `opencode-plugin-filterable-table` 已启用。
+
+### 从源码安装（开发）
 
 ```bash
 git clone git@github.com:DevDengChao/opencode-plugin-filterable-table.git
@@ -56,12 +93,7 @@ npm ci
 npm run build
 ```
 
-构建产物为 `dist/gui.cjs`。目前这是一个本地插件，尚未发布到 npm。
-
-### 配置
-
-在全局配置文件 `~/.config/opencode/opencode.jsonc` 中加入插件。Windows 上通常是
-`C:\Users\<用户名>\.config\opencode\opencode.jsonc`：
+构建产物为 `dist/gui.cjs`。然后把全局配置指向本地目录：
 
 ```jsonc
 {
@@ -72,19 +104,7 @@ npm run build
 }
 ```
 
-Windows 路径示例：
-
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugins": [
-    "file:///E:/my/open-source/opencode-plugin-filterable-table"
-  ]
-}
-```
-
-保存后 OpenCode 会热重载插件。如果 GUI 没有重新加载，可以重启 Desktop，或在
-**Settings > Extensions > Plugins** 中确认 `opencode-plugin-filterable-table` 已启用。
+Windows 上路径示例：`file:///E:/my/open-source/opencode-plugin-filterable-table`。
 
 开发时可以加上调试选项，把扫描到的表格数量输出到 Desktop 的 renderer 日志：
 
@@ -92,7 +112,7 @@ Windows 路径示例：
 {
   "plugins": [
     {
-      "package": "file:///E:/my/open-source/opencode-plugin-filterable-table",
+      "package": "@devdengchao/opencode-plugin-filterable-table",
       "options": {
         "debug": true
       }
@@ -100,6 +120,8 @@ Windows 路径示例：
   ]
 }
 ```
+
+本地源码调试时，把 `package` 换成 `file:///...` 目录即可。
 
 ## 使用
 
@@ -176,7 +198,7 @@ tests/               # jsdom 单元测试
 1. OpenCode Desktop 是否为 2.2.x。
 2. **Settings > Extensions > Plugins** 中插件是否已启用。
 3. 表格是否位于会话时间线中，而不是设置页、侧边栏或普通网页。
-4. 是否已经执行过 `npm run build`，并且 `dist/gui.cjs` 存在。
+4. 如果是本地源码安装，确认已经执行过 `npm run build`，并且 `dist/gui.cjs` 存在；如果是 npm 安装，确认包已成功安装。
 5. 打开调试选项后查看 Desktop renderer 日志中是否有 `[filterable-table]` 输出。
 
 ### 修改代码后没有生效
@@ -205,6 +227,7 @@ tests/               # jsdom 单元测试
 欢迎提交 Issue 和 Pull Request。开发、测试和提交规范见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 - [问题反馈](https://github.com/DevDengChao/opencode-plugin-filterable-table/issues)
+- [npm 包](https://www.npmjs.com/package/@devdengchao/opencode-plugin-filterable-table)
 - [更新日志](./CHANGELOG.md)
 - [English README](./README.en.md)
 
