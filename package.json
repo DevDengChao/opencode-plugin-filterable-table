@@ -51,7 +51,7 @@
     "jsdom": "^27.4.0",
     "solid-js": "^1.9.17",
     "typescript": "^5.9.3",
-    "vite": "^7.3.7",
+    "vite": "^8.3.5",
     "vite-plugin-solid": "^2.11.14",
     "vitest": "^3.2.7"
   }
